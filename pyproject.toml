@@ -1,0 +1,156 @@
+[tool.poetry]
+name = "py-identity"
+version = "1.0.0"
+description = ""
+authors = ["Udachin Ivan <pypi.udachin@yandex.ru>"]
+license = "MIT"
+homepage = "https://github.com/udachin077/py-identity"
+repository = "https://github.com/udachin077/py-identity.git"
+exclude = ["tests"]
+packages = [{ include = "pydentity", from = "." }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+email-validator = "^2.2.0"
+itsdangerous = "^2.2.0"
+cryptography = "^44.0.0"
+pyotp = "^2.9.0"
+pyjwt = "^2.10.1"
+pwdlib = { version = "^0.2.1", extras = ["argon2", "bcrypt"] }
+uuid7 = "^0.1.0"
+msgspec = "^0.19.0"
+py-machineid = { version = "^0.7.0", optional = true }
+sqlalchemy = { version = "^2.0.37", optional = true }
+tortoise-orm = { version = "^0.24.0", optional = true }
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+pytest-asyncio = "*"
+mypy = "*"
+ruff = "*"
+
+[tool.poetry.extras]
+machineid = ["py-machineid"]
+sqlalchemy = ["sqlalchemy"]
+tortoise = ["tortoise-orm"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+strict = true
+exclude = ["tests", "pydentity/contrib"]
+disable_error_code = ["import-untyped"]
+
+[[tool.mypy.overrides]]
+module = ["machineid.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["sqlalchemy.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["tortoise.*"]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+exclude = ["tests"]
+lint.select = [
+    "A", # flake8-builtins
+    "B", # flake8-bugbear
+    "BLE", # flake8-blind-except
+    "C4", # flake8-comprehensions
+    "C90", # mccabe
+    "D", # pydocstyle
+    "DJ", # flake8-django
+    "DTZ", # flake8-datetimez
+    "E", # pycodestyle errors
+    "ERA", # eradicate
+    "EXE", # flake8-executable
+    "F", # pyflakes
+    "G", # flake8-logging-format
+    "I", # isort
+    "ICN", # flake8-import-conventions
+    "ISC", # flake8-implicit-str-concat
+    "N", # pep8-naming
+    "PIE", # flake8-pie
+    "PLC", # pylint - convention
+    "PLE", # pylint - error
+    "PLW", # pylint - warning
+    "PTH", # flake8-use-pathlib
+    "Q", # flake8-quotes
+    "RET", # flake8-return
+    "RUF", # Ruff-specific rules
+    "S", # flake8-bandit
+    "SIM", # flake8-simplify
+    "T10", # flake8-debugger
+    "T20", # flake8-print
+    "TC", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "UP", # pyupgrade
+    "W", # pycodestyle - warning
+    "YTT", # flake8-2020
+]
+lint.ignore = [
+    "A002", # flake8-builtins - argument is shadowing a Python builtin
+    "A003", # flake8-builtins - class attribute {name} is shadowing a python builtin
+    "B010", # flake8-bugbear - do not call setattr with a constant attribute value
+    "B019", # flake8-bugbear - use of functools.lru_cache or functools.cache on methods can lead to memory leaks
+    "S105", # flake8-bandit - possible hardcoded password assigned
+    "SIM102", # flake8-simplify - use a single `if` statement instead of nested `if` statements
+    "D100", # pydocstyle - missing docstring in public module
+    "D101", # pydocstyle - missing docstring in public class
+    "D102", # pydocstyle - missing docstring in public method
+    "D103", # pydocstyle - missing docstring in public function
+    "D104", # pydocstyle - missing docstring in public package
+    "D105", # pydocstyle - missing docstring in magic method
+    "D106", # pydocstyle - missing docstring in public nested class
+    "D107", # pydocstyle - missing docstring in __init__
+    "D205", # pydocstyle - 1 blank line required between summary line and description
+    "D401", # pydocstyle - first line of docstring should be in imperative mood
+    "RUF012", # Ruff-specific rules - annotated with classvar
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 12
+
+[tool.ruff.lint.isort]
+known-first-party = ["pydentity", "tests"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pep8-naming]
+ignore-names = [
+    "ConcurrencyFailure",
+    "DefaultError",
+    "DuplicateEmail",
+    "DuplicateRoleName",
+    "DuplicateUserName",
+    "InvalidDomain",
+    "InvalidEmail",
+    "InvalidRoleName",
+    "InvalidToken",
+    "InvalidUserName",
+    "LoginAlreadyAssociated",
+    "NullSecurityStamp",
+    "PasswordMismatch",
+    "PasswordRequiresDigit",
+    "PasswordRequiresLower",
+    "PasswordRequiresNonAlphanumeric",
+    "PasswordRequiresUniqueChars",
+    "PasswordRequiresUpper",
+    "PasswordTooShort",
+    "RecoveryCodeRedemptionFailed",
+    "RoleNotFound",
+    "UserAlreadyHasPassword",
+    "UserAlreadyInRole",
+    "UserLockedOut",
+    "UserLockoutNotEnabled",
+    "UserNameNotFound",
+    "UserNotInRole",
+    "FormatNoTokenProvider",
+]
