@@ -5,7 +5,6 @@
 * **Managers**
     - [x] UserManager
     - [x] RoleManager
-    - [x] SignInManager
 * **Models and stores**
     - [x] Supports personal data field (encrypted)
     - [x] SQLAlchemy
